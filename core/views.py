@@ -1,17 +1,7 @@
-from core.models import Users
-from core.forms import SignUpForm
+from core.forms import SignUpForm, SolicitarServicioForm
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 # Create your views here.
-
-def login(request):
-    datos={
-        'form':AuthenticationForm()
-    }
-    return render(request,'core/login.html',datos)
-
-def logout(request):
-    return render(request,'core/logout.html')
 
 def signin(request):
     datos={
@@ -31,7 +21,18 @@ def signin(request):
             datos['error'] = "Datos ingresados no validos"
     return render(request,'core/signin.html',datos)
 def main_page(request):
-    return render(request,'core/index.html')
+    datos={
+        'form':SolicitarServicioForm()
+    }
+    if request.method=='POST':
+        formulario=SolicitarServicioForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            datos['mensaje']="Agregado correctamente"
+            
+    
+    
+    return render(request,'core/index.html', datos)
 
 def redirect_login(request):
     return redirect('login')

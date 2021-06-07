@@ -1,4 +1,4 @@
-from core.models import Users
+from core.models import Servicio, Users
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -12,3 +12,9 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = Users
         fields = ('username', 'email', 'password1', 'password2', 'phone')
+
+class SolicitarServicioForm(forms.ModelForm):
+    
+    class Meta:
+        model = Servicio
+        fields = ("first_name", "age", "email", "phone", "cause", "files")
