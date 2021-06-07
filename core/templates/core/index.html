@@ -1,0 +1,4 @@
+{% block title %}index{% endblock title %}
+{% csrf_token %}
+{{ user.email }}
+<a href="{% url 'logout' %}">cerrar sesion</a>

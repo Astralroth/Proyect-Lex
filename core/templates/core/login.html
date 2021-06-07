@@ -1,0 +1,9 @@
+{% block title %}Lex{% endblock title %}
+{% block body %}
+<form class="form" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn btn-primary" type="submit"> Iniciar Sesion </button>
+</form>
+<a href="{% url 'signin' %}">Registrate</a>
+{% endblock body %}
