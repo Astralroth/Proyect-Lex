@@ -76,8 +76,7 @@ WSGI_APPLICATION = 'Lex.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql'
-        
+
     }
 }
 
