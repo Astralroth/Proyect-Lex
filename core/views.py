@@ -10,7 +10,6 @@ def signin(request):
     if request.method=='POST':
         formulario=SignUpForm(request.POST)
         if formulario.is_valid():
-            username= formulario.cleaned_data.get('username')
             raw_password1=formulario.cleaned_data.get('password1')
             raw_password2=formulario.cleaned_data.get('password2')
             if raw_password1==raw_password2:
