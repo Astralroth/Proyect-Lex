@@ -18,8 +18,9 @@
         <div class="row">
             <form action="" method="post">
                 {% csrf_token %}
-                {{form.as_p}}
-                <button type="submit">Registrar</button> <button onclick="location=`{% url 'login' %}`">Volver</button>
+                {{user.as_p}}
+                <button type="submit">Registrar</button>
+                <button onclick="location=`{% url 'login' %}`">Volver</button>
             </form>
             <p id="id_error">{{error}}</p>
         </div>

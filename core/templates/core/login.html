@@ -1,9 +1,11 @@
+{% extends 'core/base_li-lo.html' %}
+
 {% block title %}Lex{% endblock title %}
-{% block body %}
+{% block content %}
 <form class="form" method="post">
     {% csrf_token %}
     {{form.as_p}}
     <button class="btn btn-primary" type="submit"> Iniciar Sesion </button>
 </form>
 <a href="{% url 'signin' %}">Registrate</a>
-{% endblock body %}
+{% endblock content %}

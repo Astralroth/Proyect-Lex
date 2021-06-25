@@ -1,0 +1,11 @@
+{% extends 'core/index.html' %}
+
+{% block content %}
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-outline-primary">Enviar</button>
+    <button type="reset" class="btn btn-outline-primary">Limpiar</button>
+    </br> {{mensaje}}
+</form>
+{% endblock content %}

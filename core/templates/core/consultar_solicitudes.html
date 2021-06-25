@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<table class="table table-hover">
+<thead>
+        <tr>
+            <th>Nombre</th>
+            {% if user.is_staff %}<th>Usuario</th>{% endif %}
+            <th>Semestres</th>
+            <th>Mensualidad</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in list %}
+        <tr>
+            <th scope="row">{{ s.id }} </th>
+            {% if user.is_staff %}<th>{{s.cliente}}</th>{% endif %}
+            <td>{{ s.first_name }}</td>
+            <td>{{ s.email }}</td>
+
+            <td><a class="btn btn-primary" href="{% url 'service_edit' s.id %}">Editar</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

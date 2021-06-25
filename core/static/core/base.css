@@ -1,0 +1,14 @@
+body{
+    background: url(../core/background-base.jpg) no-repeat center fixed;
+    background-size: cover;
+}
+
+.container{
+    text-align: center;
+    margin: 40px;
+}
+li,
+p,
+label{
+    color: aliceblue
+}
