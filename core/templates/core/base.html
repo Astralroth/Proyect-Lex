@@ -21,21 +21,25 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'index' %}"> Inicio <span class="sr-only">(current)</span></a>
                 </li>
-
+                {% if perms.core.view_servicio %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Servicio
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if perms.core.add_servicio %}
                         <a class="dropdown-item" href="{% url 'service' %}">Solicitar</a>
+                        {% endif %}
+                        {% if perms.core.view_servicio %}{% endif %}
                         <a class="dropdown-item" href="{% url 'service_view' %}">Consultar</a>
                         {% if user.is_staff %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'service_view_staff' %}">Consultar todos</a>
                         {% endif %}
-                    </div>                   
+                    </div>            
                 </li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav">
                 <a class="navbar-brand" href="{% url 'profile_edit' %}"><img src="{% static 'img/profile_icon.png' %}" width="30" height="30" alt=""></a>

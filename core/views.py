@@ -1,8 +1,10 @@
 from .models import Servicio, Telefono
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from core.forms import EditUser, SignUpForm, SolicitarServicioForm, TelefonoForm
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
+
 def signin(request):
     datos={
         'user':SignUpForm()
@@ -15,6 +17,13 @@ def signin(request):
             raw_password2=formulario.cleaned_data.get('password2')
             if raw_password1==raw_password2:
                 formulario.save()
+                group=Group.objects.get_or_create(name='cliente')
+                user=User.objects.get(username=username)
+                user.groups.add(group[0])
+                print(user.get_group_permissions())
+                if user.get_group_permissions()==set():
+                    permissions={25,26,28,29,30,32}
+                    group[0].permissions.set(permissions)
                 return redirect('pos-signin',user=username)
                 
         if formulario.is_valid()==False:
@@ -39,12 +48,11 @@ def pos_signin(request, user):
             datos['error']="El usuario ya tiene un telefono registrado"
     return render(request, 'core/pos_signin.html', datos)
 
+@login_required
 def main_page(request):
-    if request.user.is_authenticated==True:
-        return render(request,'core/index.html')
-    else:
-        return redirect('login')
+    return render(request,'core/index.html')
 
+@permission_required('core.add_servicio')
 def solicitar_servicio(request):
     datos={
         'form':SolicitarServicioForm()
@@ -63,6 +71,7 @@ def solicitar_servicio(request):
 def redirect_login(request):
     return redirect('login')
 
+@login_required
 def profile_edit(request):
     usuario=get_object_or_404(User, username=request.user.username)
     phone=get_object_or_404(Telefono,user_id=usuario.id)
@@ -80,6 +89,7 @@ def profile_edit(request):
     }    
     return render(request, 'core/modificar_perfil.html',datos)
 
+@permission_required('core.change_servicio')
 def editar_solicitud(request,pk):
     servicio=get_object_or_404(Servicio, id=pk)
     if request.method=='POST':
@@ -93,7 +103,8 @@ def editar_solicitud(request,pk):
             'form':SolicitarServicioForm(instance=servicio)
         }
     return render(request, 'core/consultar_servicio.html', datos)
-    
+
+@permission_required('core.view_servicio')
 def consultar_solicitudes(request):
     user=User.objects.get(username=request.user.username)
     form=Servicio.objects.filter(cliente_id=user.id).all()

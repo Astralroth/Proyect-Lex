@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 # from django.contrib.auth.models import AbstractUser
 # Create your models here.
-
 class Telefono(models.Model):
     user=models.ForeignKey('auth.User', on_delete=models.CASCADE)
     phone=models.CharField('Telefono',max_length=12, blank=True, null=True)
