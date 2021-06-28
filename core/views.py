@@ -28,7 +28,7 @@ def pos_signin(request, user):
     usuario=get_object_or_404(User,username=user)
     if request.method=='POST':
         formulario=TelefonoForm(request.POST)
-        count=User.objects.filter(username=user).count()
+        count=Telefono.objects.filter(user_id=usuario).count()
         if count==0:
             if formulario.is_valid():
                 formulario.save(usuario)
