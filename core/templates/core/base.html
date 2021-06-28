@@ -38,7 +38,7 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <a class="navbar-brand" href="{% url 'profile' %}"><img src="{% static 'img/profile_icon.png' %}" width="30" height="30" alt=""></a>
+                <a class="navbar-brand" href="{% url 'profile_edit' %}"><img src="{% static 'img/profile_icon.png' %}" width="30" height="30" alt=""></a>
                 <div class="navbar-text">Bienvenido {{user.username}}</div>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="{% url 'logout' %}">   Cerrar Sesion</a>

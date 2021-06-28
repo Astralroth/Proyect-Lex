@@ -1,10 +1,8 @@
-from django.core.files.storage import FileSystemStorage
 from .models import Servicio, Telefono
 from django.contrib.auth.models import User
 from core.forms import EditUser, SignUpForm, SolicitarServicioForm, TelefonoForm
 from django.shortcuts import get_object_or_404, redirect, render
 # Create your views here.
-
 def signin(request):
     datos={
         'user':SignUpForm()
@@ -65,14 +63,8 @@ def solicitar_servicio(request):
 def redirect_login(request):
     return redirect('login')
 
-def profile(request):
-    if request.user.is_authenticated==True:
-        return redirect('profile_edit', user=request.user)
-    else:
-        return redirect('login')
-
-def profile_edit(request,user):
-    usuario=get_object_or_404(User, username=user)
+def profile_edit(request):
+    usuario=get_object_or_404(User, username=request.user.username)
     phone=get_object_or_404(Telefono,user_id=usuario.id)
     if request.method=='POST':
        form_user=EditUser(request.POST, instance=usuario)
@@ -86,23 +78,21 @@ def profile_edit(request,user):
         'form_user':EditUser(instance=usuario),
         'form_phone':TelefonoForm(instance=phone)
     }    
-    if request.user.is_authenticated==True:
-        return render(request, 'core/modificar_perfil.html',datos)
-    else:
-        return redirect('login')
+    return render(request, 'core/modificar_perfil.html',datos)
 
 def editar_solicitud(request,pk):
     servicio=get_object_or_404(Servicio, id=pk)
     if request.method=='POST':
         form=SolicitarServicioForm(request.POST, request.FILES, instance=servicio)
+        id=User.objects.get(username=request.user.username)
         if form.is_valid():
-            form.save()
+            form.save(id)
+            return redirect('service_view')
     else:
-        form=SolicitarServicioForm(instance=servicio)
-    if request.user.is_authenticated==True:
-        return render(request, 'core/consultar_servicio.html', {'form':form})
-    else:
-        return redirect('login')
+        datos={
+            'form':SolicitarServicioForm(instance=servicio)
+        }
+    return render(request, 'core/consultar_servicio.html', datos)
     
 def consultar_solicitudes(request):
     user=User.objects.get(username=request.user.username)
