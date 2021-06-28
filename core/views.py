@@ -20,9 +20,8 @@ def signin(request):
                 group=Group.objects.get_or_create(name='cliente')
                 user=User.objects.get(username=username)
                 user.groups.add(group[0])
-                print(user.get_group_permissions())
                 if user.get_group_permissions()==set():
-                    permissions={25,26,28,29,30,32}
+                    permissions={25,26,28,29,30,32,16,14}
                     group[0].permissions.set(permissions)
                 return redirect('pos-signin',user=username)
                 
@@ -52,6 +51,7 @@ def pos_signin(request, user):
 def main_page(request):
     return render(request,'core/index.html')
 
+@login_required
 @permission_required('core.add_servicio')
 def solicitar_servicio(request):
     datos={
@@ -72,6 +72,7 @@ def redirect_login(request):
     return redirect('login')
 
 @login_required
+@permission_required('auth.change_user')
 def profile_edit(request):
     usuario=get_object_or_404(User, username=request.user.username)
     phone=get_object_or_404(Telefono,user_id=usuario.id)
@@ -89,6 +90,7 @@ def profile_edit(request):
     }    
     return render(request, 'core/modificar_perfil.html',datos)
 
+@login_required
 @permission_required('core.change_servicio')
 def editar_solicitud(request,pk):
     servicio=get_object_or_404(Servicio, id=pk)
@@ -104,12 +106,14 @@ def editar_solicitud(request,pk):
         }
     return render(request, 'core/consultar_servicio.html', datos)
 
+@login_required
 @permission_required('core.view_servicio')
 def consultar_solicitudes(request):
     user=User.objects.get(username=request.user.username)
     form=Servicio.objects.filter(cliente_id=user.id).all()
     return render(request, 'core/consultar_solicitudes.html',{'list':form})
 
+@login_required
 def consultar_solicitudes_staff(request):
     service=Servicio.objects.select_related('cliente').all()
     
