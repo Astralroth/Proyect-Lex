@@ -53,11 +53,9 @@ def solicitar_servicio(request):
     }
     if request.method=='POST':
         formulario=SolicitarServicioForm(request.POST,request.FILES)
+        id=User.objects.get(username=request.user.username)
         if formulario.is_valid():
-            myfile = request.FILES['files']
-            fs = FileSystemStorage()
-            fs.save(myfile.name, myfile)
-            formulario.save()
+            formulario.save(id)
             datos['mensaje']="Agregado correctamente"
     if request.user.is_authenticated==True:
         return render(request,'core/solicitar_servicio.html', datos)
@@ -96,15 +94,13 @@ def profile_edit(request,user):
 def editar_solicitud(request,pk):
     servicio=get_object_or_404(Servicio, id=pk)
     if request.method=='POST':
-        form=SolicitarServicioForm(request.POST, instance=servicio)
+        form=SolicitarServicioForm(request.POST, request.FILES, instance=servicio)
         if form.is_valid():
             form.save()
     else:
-        datos={
-            'form':SolicitarServicioForm(instance=servicio)
-        }
+        form=SolicitarServicioForm(instance=servicio)
     if request.user.is_authenticated==True:
-        return render(request, 'core/consultar_servicio.html', datos)
+        return render(request, 'core/consultar_servicio.html', {'form':form})
     else:
         return redirect('login')
     

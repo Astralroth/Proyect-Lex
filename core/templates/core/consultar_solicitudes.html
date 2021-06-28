@@ -4,10 +4,12 @@
 <table class="table table-hover">
 <thead>
         <tr>
-            <th>Nombre</th>
+            <th></th>
             {% if user.is_staff %}<th>Usuario</th>{% endif %}
-            <th>Semestres</th>
-            <th>Mensualidad</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Correo electronico</th>
+            <th>Telefono</th>
             <th></th>
         </tr>
     </thead>
@@ -17,8 +19,9 @@
             <th scope="row">{{ s.id }} </th>
             {% if user.is_staff %}<th>{{s.cliente}}</th>{% endif %}
             <td>{{ s.first_name }}</td>
-            <td>{{ s.email }}</td>
-
+            <td>{{ s.age }}</td>
+            <td>{{s.email}}</td>
+            <td>{{s.phone}}</td>
             <td><a class="btn btn-primary" href="{% url 'service_edit' s.id %}">Editar</a></td>
         </tr>
         {% endfor %}

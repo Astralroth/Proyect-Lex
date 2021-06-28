@@ -17,4 +17,7 @@ class Servicio(models.Model):
     email=models.EmailField('Correo electronico',max_length=254, blank=True, null=True)
     phone=models.CharField('Telefono',max_length=12, blank=True, null=True)
     cause=models.TextField('Redactar Causa',max_length=254, blank=True,null=True)
-    files=models.FileField('Anexos',blank=True, null=True)
+    files=models.FileField(blank=True, null=True)
+    
+    def set_id(self, id):
+        self.cliente=id

@@ -26,6 +26,13 @@ class SolicitarServicioForm(forms.ModelForm):
         model = Servicio
         fields = ("first_name", "age", "email", "phone", "cause", "files")
         
+    def save(self,id,commit=True):
+        user= super(SolicitarServicioForm, self).save(commit=False)
+        if commit:
+            user.set_id(id)
+            user.save()
+        return user
+        
 class TelefonoForm(forms.ModelForm):
     
     phone = forms.CharField(max_length=11, widget=forms.NumberInput(attrs={'class':'form-control'}), label="Telefono")
