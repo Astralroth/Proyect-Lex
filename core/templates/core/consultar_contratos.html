@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<table class="table table-hover">
+<thead>
+        <tr>
+            <th></th>
+            {% if user.is_staff %}<th>Usuario</th>{% endif %}
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Correo electronico</th>
+            <th>Telefono</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in list %}
+        <tr>
+            <th scope="row">{{ c.id }} </th>
+            {% if user.is_staff %}<th>{{c.abogado}}</th>{% endif %}
+            <td>{{ c.name }}</td>
+            <td>{{ c.age }}</td>
+            <td>{{c.email}}</td>
+            <td>{{c.phone}}</td>
+            <td><a class="btn btn-primary" href="">Descargar</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

@@ -3,6 +3,7 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
+    </br>
     {{form.as_p}}
     <button type="submit" class="btn btn-outline-primary">Actualizar datos</button>
     <a class="btn btn-outline-primary" href="{% url 'service_view' %}">Cancelar</a>

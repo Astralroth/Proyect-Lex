@@ -1,11 +1,62 @@
 {% extends 'core/index.html' %}
 
 {% block content %}
-<form method="post" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="btn btn-outline-primary">Enviar</button>
-    <button type="reset" class="btn btn-outline-primary">Limpiar</button>
-    </br> {{mensaje}}
-</form>
+<br>
+<div class="row">
+    <div class="col-12 col-md-6 offset-md-3">
+        <form method="post" id="formulario1">
+            {% csrf_token %}
+             
+            <div class="form-group">
+                
+        
+                    <label for="id_first_name">Nombre Cliente</label>
+                    {{form.first_name}}
+        
+              
+                
+            </div>
+
+            <div class="form-group">
+                <label for="id_txtEdad">Edad  </label>
+                {{form.age}}
+            </div>
+            <div class="form-group">
+                <label for="id_txtEmail">Email</label>
+                {{form.email}}
+            </div>
+           
+            <div class="form-group">
+                <label for="id_txtTelefono">Telefono</label>
+                {{form.phone}}
+            </div>
+        
+            <div class="form-group">
+                <label for="id_txtCause">Redactar causa</label>
+                {{form.cause}}
+            </div>
+        
+            <div class="form-group">
+                {{form.files}}
+                
+            </div>
+            
+        
+            <div class= "d-flex justify-content-end">
+                <button style= " background-color:indianred" type="submit" id="form-check" class="btn  ">Enviar</button>
+            
+                &nbsp;
+            
+                <button type="reset" class="btn  btn-dark">Limpiar</button>
+        
+        
+            </div>
+            
+            
+        </form>
+
+    </div>
+    </offset-md-3>
+</div>
+
 {% endblock content %}

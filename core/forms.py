@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from core.models import Servicio, Telefono
+from django.db.models import fields
+from core.models import Contrato, Servicio, Telefono
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -24,7 +25,7 @@ class SolicitarServicioForm(forms.ModelForm):
     
     class Meta:
         model = Servicio
-        fields = ("first_name", "age", "email", "phone", "cause", "files")
+        fields = ("first_name", "age", "email", "phone", "cause", "files",)
         
     def save(self,id,commit=True):
         user= super(SolicitarServicioForm, self).save(commit=False)
@@ -58,3 +59,15 @@ class EditUser(forms.ModelForm):
         model = User
         fields = ("username","email",)
         
+class ContratoForm(forms.ModelForm):
+    
+    class Meta:
+        model = Contrato
+        fields = ("name","rut","age","email","phone","files_boleta","files_causa","datetime","type_service","additional_service",)
+    
+    def save(self,id,commit=True):
+        user=super(ContratoForm,self).save(commit=False)
+        if commit:
+            user.set_id(id)
+            user.save()
+        return user

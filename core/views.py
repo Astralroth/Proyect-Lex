@@ -1,6 +1,6 @@
-from .models import Servicio, Telefono
+from .models import Contrato, Servicio, Telefono
 from django.contrib.auth.models import Group, User
-from core.forms import EditUser, SignUpForm, SolicitarServicioForm, TelefonoForm
+from core.forms import ContratoForm, EditUser, SignUpForm, SolicitarServicioForm, TelefonoForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
@@ -96,7 +96,7 @@ def editar_solicitud(request,pk):
     servicio=get_object_or_404(Servicio, id=pk)
     if request.method=='POST':
         form=SolicitarServicioForm(request.POST, request.FILES, instance=servicio)
-        id=User.objects.get(username=request.user.username)
+        id=User.objects.get(username=servicio.cliente)
         if form.is_valid():
             form.save(id)
             return redirect('service_view')
@@ -116,5 +116,25 @@ def consultar_solicitudes(request):
 @login_required
 def consultar_solicitudes_staff(request):
     service=Servicio.objects.select_related('cliente').all()
-    
     return render(request, 'core/consultar_solicitudes.html',{'list':service})
+
+def registrar_contrato(request):
+    if request.method=="POST":
+        form=ContratoForm(request.POST, request.FILES)
+        id=User.objects.get(username=request.user.username)
+        if form.is_valid():
+            form.save(id)
+    else:
+        datos={
+            'form':ContratoForm()
+        }
+    return render(request, 'core/registrar_contrato.html',datos)
+
+def consultar_contratos(request):
+    user=User.objects.get(username=request.user.username)
+    form=Contrato.objects.filter(abogado_id=user.id).all()
+    return render(request, 'core/consultar_contratos.html', {'list':form})
+
+def consultar_contratos_staff(request):
+    contrato=Contrato.objects.select_related('abogado').all()
+    return render(request, 'core/consultar_contratos.html',{'list':contrato})

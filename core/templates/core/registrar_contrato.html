@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<aside class="float-left">
+    <h3>Datos del Cliente:</h2>
+<div class="form-group">
+    {{form.name.label_tag}}
+    {{form.name}}
+</div>
+<div class="form-group">
+    {{form.rut.label_tag}}
+    {{form.rut}}
+</div>
+<div class="form-group">
+    {{form.age.label_tag}}
+    {{form.age}}
+</div>
+<div class="form-group">
+    {{form.email.label_tag}}
+    {{form.email}}
+</div>
+<div class="form-group">
+    {{form.phone.label_tag}}
+    {{form.phone}}
+</div>
+<div class="form-group">
+    {{form.files_boleta.label_tag}}
+    {{form.files_boleta}}
+</div>
+<div class="form-group">
+    {{form.files_causa.label_tag}}
+    {{form.files_causa}}
+</div>
+</aside>
+
+<div class="form-group">
+    {{form.datetime.label_tag}}
+    {{form.datetime}}
+</div>
+<div>
+    <h3>Servicios:</h3>
+<div class="form-group">
+    {{form.type_service.label_tag}}
+    {{form.type_service}}
+</div>
+<div class="form-group">
+    {{form.additional_service.label_tag}}
+    {{form.additional_service}}
+</div>
+</div>
+<div>
+    <h3>Formato:</h3>
+<div class="form-group">
+    <input type="radio" name="format" id="radio_format1"> <label for="radio_format1">1</label>
+    <input type="radio" name="format" id="radio_format2"> <label for="radio_format2">2</label>
+</div>
+</div>
+<button>Descargar</button>
+<button type="submit">Registrar</button>
+</form>
+{% endblock content %}

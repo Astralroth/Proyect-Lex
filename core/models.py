@@ -11,13 +11,13 @@ class Telefono(models.Model):
         self.user=id
     
 class Servicio(models.Model):
-    cliente=models.ForeignKey('auth.User', on_delete=models.CASCADE, default='1')
-    first_name=models.CharField('Nombre',max_length=30)
-    age=models.IntegerField('Edad')
-    email=models.EmailField('Correo electronico',max_length=254)
-    phone=models.CharField('Telefono',max_length=12)
-    cause=models.TextField('Redactar Causa',max_length=254)
-    files=models.FileField()
+    cliente=models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
+    first_name=models.CharField('Nombre',max_length=30, null=True)
+    age=models.IntegerField('Edad',null=True)
+    email=models.EmailField('Correo electronico',max_length=254, null=True)
+    phone=models.CharField('Telefono',max_length=12, null=True)
+    cause=models.TextField('Redactar Causa',max_length=254, null=True)
+    files=models.FileField(null=True)
     
     def set_id(self, id):
         self.cliente=id
@@ -33,10 +33,27 @@ class Pagos(models.Model):
 
 class Causas(models.Model):
     name=models.CharField(max_length=30)
-    age=models.IntegerField()
+    age=models.IntegerField('Edad',null=True)
     email=models.EmailField(max_length=254)
     phone=models.CharField(max_length=12)
     rut=models.CharField(max_length=10)
     files_boleta=models.FileField()
     files_causa=models.FileField()
     files_contrato=models.FileField()
+
+class Contrato(models.Model):
+    abogado=models.ForeignKey('auth.User', on_delete=models.CASCADE, default='')
+    name=models.CharField(max_length=100)
+    rut=models.CharField(max_length=10)
+    age=models.IntegerField(null=True)
+    email=models.EmailField(max_length=254)
+    phone=models.CharField(max_length=12)
+    files_boleta=models.FileField(null=True)
+    files_causa=models.FileField(null=True)
+    datetime=models.DateTimeField(null=True)
+    type_service=models.CharField(max_length=30, null=True)
+    additional_service=models.CharField(max_length=30, null=True)
+    
+    def set_id(self, id):
+        self.abogado=id
+    

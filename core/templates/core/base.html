@@ -14,16 +14,16 @@
 
 <body>
     {% comment %} inicio de navbar {% endcomment %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'index' %}">Lex</a>
+    <nav class="navbar navbar-expand-lg navbar-light " id = id_navbar>
+        <a class="navbar-brand text-light" href="{% url 'index' %}">Lex</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'index' %}"> Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-light" href="{% url 'index' %}"> Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 {% if perms.core.view_servicio %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Servicio
                     </a>
@@ -31,21 +31,38 @@
                         {% if perms.core.add_servicio %}
                         <a class="dropdown-item" href="{% url 'service' %}">Solicitar</a>
                         {% endif %}
-                        {% if perms.core.view_servicio %}{% endif %}
                         <a class="dropdown-item" href="{% url 'service_view' %}">Consultar</a>
                         {% if user.is_staff %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'service_view_staff' %}">Consultar todos</a>
                         {% endif %}
-                    </div>            
+                    </div>                   
+                </li>
+                {% endif %}
+                {% if perms.core.view_contract %}
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Contrato
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if perms.core.add_contrato %}
+                        <a class="dropdown-item" href="{% url 'contract' %}">Solicitar</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{% url 'contract_view' %}">Consultar</a>
+                        {% if user.is_staff %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'contract_view_staff' %}">Consultar todos</a>
+                        {% endif %}
+                    </div>                   
                 </li>
                 {% endif %}
             </ul>
             <ul class="navbar-nav">
                 <a class="navbar-brand" href="{% url 'profile_edit' %}"><img src="{% static 'img/profile_icon.png' %}" width="30" height="30" alt=""></a>
-                <div class="navbar-text">Bienvenido {{user.username}}</div>
+                <div class="navbar-text text-light">Bienvenido {{user.username}}</div>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="{% url 'logout' %}">   Cerrar Sesion</a>
+                    <a class="nav-link text-light" href="{% url 'logout' %}">   Cerrar Sesion</a>
                 </li>
             </ul>
         </div>
