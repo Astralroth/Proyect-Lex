@@ -1,63 +1,90 @@
 {% extends 'core/base.html' %}
 
-{% block content %}
-<form method="post" enctype="multipart/form-data">
-{% csrf_token %}
-<aside class="float-left">
-    <h3>Datos del Cliente:</h2>
-<div class="form-group">
-    {{form.name.label_tag}}
-    {{form.name}}
-</div>
-<div class="form-group">
-    {{form.rut.label_tag}}
-    {{form.rut}}
-</div>
-<div class="form-group">
-    {{form.age.label_tag}}
-    {{form.age}}
-</div>
-<div class="form-group">
-    {{form.email.label_tag}}
-    {{form.email}}
-</div>
-<div class="form-group">
-    {{form.phone.label_tag}}
-    {{form.phone}}
-</div>
-<div class="form-group">
-    {{form.files_boleta.label_tag}}
-    {{form.files_boleta}}
-</div>
-<div class="form-group">
-    {{form.files_causa.label_tag}}
-    {{form.files_causa}}
-</div>
-</aside>
+{% load static %}
 
-<div class="form-group">
-    {{form.datetime.label_tag}}
-    {{form.datetime}}
-</div>
-<div>
-    <h3>Servicios:</h3>
-<div class="form-group">
-    {{form.type_service.label_tag}}
-    {{form.type_service}}
-</div>
-<div class="form-group">
-    {{form.additional_service.label_tag}}
-    {{form.additional_service}}
-</div>
-</div>
-<div>
-    <h3>Formato:</h3>
-<div class="form-group">
-    <input type="radio" name="format" id="radio_format1"> <label for="radio_format1">1</label>
-    <input type="radio" name="format" id="radio_format2"> <label for="radio_format2">2</label>
-</div>
-</div>
-<button>Descargar</button>
-<button type="submit">Registrar</button>
-</form>
+{% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/solicitar_servicio.css' %}">
+{% endblock css %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+{% endblock js %}
+
+{% block content %}
+	<div class="d-flex justify-content-center">
+		<div class="card mt-5 col-md-4 animated bounceInDown myForm">
+			<div class="card-header">
+				<center><h4>Registrar Contrato</h4></center>
+			</div>
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+					<div id="dynamic_container">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-user"></i></span>
+							</div>
+							{{form.name}}
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-id-card"></i></span>
+							</div>
+							{{form.rut}}
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-hourglass-end"></i></span>
+							</div>
+							{{form.age}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-at"></i></span>
+							</div>
+							{{form.email}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-phone"></i></span>
+							</div>
+							{{form.phone}}
+						</div>
+                        <div class="input-group mt-3">
+							{{form.files_boleta}}
+						</div>
+                        <div class="input-group mt-3">
+							{{form.files_causa}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-calendar-alt"></i></span>
+							</div>
+							{{form.datetime}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-chevron-circle-down"></i></span>
+							</div>
+							{{form.type_service}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-chevron-circle-down"></i></span>
+							</div>
+							{{form.additional_service}}
+						</div>
+                        <div class="input-group mt-3">
+					</div>
+			</div>
+			<div class="card-footer">
+				<button type="submit" class="btn btn-success btn-sm submit_btn"><i class="fas fa-arrow-alt-circle-right"></i> Submit</button>
+				{{mensaje}}
+			</div>
+            </form>
+		</div>
+	</div>
 {% endblock content %}

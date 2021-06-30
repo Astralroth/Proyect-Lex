@@ -19,5 +19,7 @@ urlpatterns = [
     path('service/view/staff', views.consultar_solicitudes_staff, name='service_view_staff'),
     path('contract/', views.registrar_contrato, name='contract'),
     path('contract/view/', views.consultar_contratos, name='contract_view'),
-    path('contract/view/staff', views.consultar_contratos_staff, name='contract_view_staff')
+    path('contract/view/staff', views.consultar_contratos_staff, name='contract_view_staff'),
+    path('pay/', views.ingresar_pago, name='pago'),
+    path('causes/', views.ingresar_causas, name='ingresar_causas')
 ]

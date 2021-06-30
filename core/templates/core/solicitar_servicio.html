@@ -1,62 +1,67 @@
 {% extends 'core/index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/solicitar_servicio.css' %}">
+{% endblock css %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+{% endblock js %}
 
 {% block content %}
-<br>
-<div class="row">
-    <div class="col-12 col-md-6 offset-md-3">
-        <form method="post" id="formulario1">
-            {% csrf_token %}
-             
-            <div class="form-group">
-                
-        
-                    <label for="id_first_name">Nombre Cliente</label>
-                    {{form.first_name}}
-        
-              
-                
-            </div>
-
-            <div class="form-group">
-                <label for="id_txtEdad">Edad  </label>
-                {{form.age}}
-            </div>
-            <div class="form-group">
-                <label for="id_txtEmail">Email</label>
-                {{form.email}}
-            </div>
-           
-            <div class="form-group">
-                <label for="id_txtTelefono">Telefono</label>
-                {{form.phone}}
-            </div>
-        
-            <div class="form-group">
-                <label for="id_txtCause">Redactar causa</label>
-                {{form.cause}}
-            </div>
-        
-            <div class="form-group">
-                {{form.files}}
-                
-            </div>
-            
-        
-            <div class= "d-flex justify-content-end">
-                <button style= " background-color:indianred" type="submit" id="form-check" class="btn  ">Enviar</button>
-            
-                &nbsp;
-            
-                <button type="reset" class="btn  btn-dark">Limpiar</button>
-        
-        
-            </div>
-            
-            
-        </form>
-
-    </div>
-    </offset-md-3>
-</div>
-
+	<div class="d-flex justify-content-center">
+		<div class="card mt-5 col-md-4 animated bounceInDown myForm">
+			<div class="card-header">
+				<center><h4>Solicitar servicio</h4></center>
+			</div>
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+					<div id="dynamic_container">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-user"></i></span>
+							</div>
+							{{form.first_name}}
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-hourglass-end"></i></span>
+							</div>
+							{{form.age}}
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-at"></i></span>
+							</div>
+							{{form.email}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-phone"></i></span>
+							</div>
+							{{form.phone}}
+						</div>
+                        <div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-text-height"></i></span>
+							</div>
+							{{form.cause}}
+						</div>
+                        <div class="input-group mt-3">
+							{{form.files}}
+						</div>
+					</div>
+			</div>
+			<div class="card-footer">
+				<button type="submit" class="btn btn-success btn-sm submit_btn"><i class="fas fa-arrow-alt-circle-right"></i> Submit</button>
+				{{mensaje}}
+			</div>
+            </form>
+		</div>
+	</div>
 {% endblock content %}

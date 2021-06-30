@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields import files
+from django.db.models.fields.related import ForeignKey
 # from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Telefono(models.Model):
@@ -31,6 +32,9 @@ class Pagos(models.Model):
     mount=models.FloatField()
     email=models.EmailField(max_length=254)
 
+    def set_id(self, id):
+        self.tecnico=id
+
 class Causas(models.Model):
     name=models.CharField(max_length=30)
     age=models.IntegerField('Edad',null=True)
@@ -42,7 +46,7 @@ class Causas(models.Model):
     files_contrato=models.FileField()
 
 class Contrato(models.Model):
-    abogado=models.ForeignKey('auth.User', on_delete=models.CASCADE, default='')
+    abogado=models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
     name=models.CharField(max_length=100)
     rut=models.CharField(max_length=10)
     age=models.IntegerField(null=True)
@@ -50,10 +54,19 @@ class Contrato(models.Model):
     phone=models.CharField(max_length=12)
     files_boleta=models.FileField(null=True)
     files_causa=models.FileField(null=True)
-    datetime=models.DateTimeField(null=True)
-    type_service=models.CharField(max_length=30, null=True)
-    additional_service=models.CharField(max_length=30, null=True)
+    datetime=models.DateField(blank=True, null=True)
+    type_service=models.CharField(max_length=30,blank=True, null=True)
+    additional_service=models.CharField(max_length=30,blank=True, null=True)
     
     def set_id(self, id):
         self.abogado=id
+
+class Presupuesto(models.Model):
+    tecnico=ForeignKey('auth.User', on_delete=models.CASCADE)
+    name=models.CharField(max_length=30)
+    servicio=models.CharField(max_length=30)
+    presupuesto=models.IntegerField()
+    email=models.EmailField(max_length=254)
     
+    def set_id(self, id):
+        self.tecnico=id

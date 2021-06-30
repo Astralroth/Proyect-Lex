@@ -3,6 +3,7 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
+    </br>
     {{form_user.as_p}}
     {{form_phone.as_p}}
     <button type="submit">Actualizar datos</button>

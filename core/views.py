@@ -1,6 +1,6 @@
 from .models import Contrato, Servicio, Telefono
 from django.contrib.auth.models import Group, User
-from core.forms import ContratoForm, EditUser, SignUpForm, SolicitarServicioForm, TelefonoForm
+from core.forms import AgregarCausas, ContratoForm, EditUser, PagosForm, PresupuestoForm, SignUpForm, SolicitarServicioForm, TelefonoForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
@@ -104,7 +104,7 @@ def editar_solicitud(request,pk):
         datos={
             'form':SolicitarServicioForm(instance=servicio)
         }
-    return render(request, 'core/consultar_servicio.html', datos)
+    return render(request, 'core/solicitar_servicio.html', datos)
 
 @login_required
 @permission_required('core.view_servicio')
@@ -118,18 +118,20 @@ def consultar_solicitudes_staff(request):
     service=Servicio.objects.select_related('cliente').all()
     return render(request, 'core/consultar_solicitudes.html',{'list':service})
 
+@permission_required('core.add_contrato')
 def registrar_contrato(request):
+    datos={
+            'form':ContratoForm()
+        }
     if request.method=="POST":
         form=ContratoForm(request.POST, request.FILES)
         id=User.objects.get(username=request.user.username)
         if form.is_valid():
             form.save(id)
-    else:
-        datos={
-            'form':ContratoForm()
-        }
+        
     return render(request, 'core/registrar_contrato.html',datos)
 
+@permission_required('core.view_contrato')
 def consultar_contratos(request):
     user=User.objects.get(username=request.user.username)
     form=Contrato.objects.filter(abogado_id=user.id).all()
@@ -138,3 +140,46 @@ def consultar_contratos(request):
 def consultar_contratos_staff(request):
     contrato=Contrato.objects.select_related('abogado').all()
     return render(request, 'core/consultar_contratos.html',{'list':contrato})
+
+@permission_required('add_pago')
+def ingresar_pago(request):
+    datos={
+        'form':PagosForm()
+    }
+    if request.method=='POST':
+        formulario=PagosForm(request.POST)
+        id=User.objects.get(username=request.user.username)
+        if formulario.is_valid():
+            formulario.save(id)
+            datos['mensaje']="Agregado correctamente"
+    if request.user.is_authenticated==True:
+        return render(request,'core/pagos.html', datos)
+    else:
+        return redirect('login')
+
+@login_required
+@permission_required('core.add_causa')
+def ingresar_causas(request):
+    datos={
+        'form':AgregarCausas()
+    }
+    if request.method=='POST':
+        formulario=AgregarCausas(request.POST,request.FILES)
+        id=User.objects.get(username=request.user.username)
+        if formulario.is_valid():
+            formulario.save()
+            datos['mensaje']="Guardado Exitosamente"
+    return render(request, 'core/ingresar_causa.html', datos)
+
+def registrar_presupuesto(request):
+    if request.method=="POST":
+        form=PresupuestoForm(request.POST, request.FILES)
+        id=User.objects.get(username=request.user.username)
+        if form.is_valid():
+            form.save(id)
+    else:
+        datos={
+            'form':PresupuestoForm()
+        }
+    return render(request, 'core/registrar_presupuesto.html',datos)
+
