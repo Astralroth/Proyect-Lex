@@ -36,14 +36,18 @@ class Pagos(models.Model):
         self.tecnico=id
 
 class Causas(models.Model):
+    tecnico=ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
     name=models.CharField(max_length=30)
     age=models.IntegerField('Edad',null=True)
     email=models.EmailField(max_length=254)
     phone=models.CharField(max_length=12)
     rut=models.CharField(max_length=10)
-    files_boleta=models.FileField()
-    files_causa=models.FileField()
-    files_contrato=models.FileField()
+    files_boleta=models.FileField(blank=True, null=True)
+    files_causa=models.FileField(blank=True, null=True)
+    files_contrato=models.FileField(blank=True, null=True)
+    
+    def set_id(self, id):
+        self.tecnico=id
 
 class Contrato(models.Model):
     abogado=models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
@@ -67,6 +71,7 @@ class Presupuesto(models.Model):
     servicio=models.CharField(max_length=30)
     presupuesto=models.IntegerField()
     email=models.EmailField(max_length=254)
+    rut=models.CharField(max_length=10,null=True)
     
     def set_id(self, id):
         self.tecnico=id

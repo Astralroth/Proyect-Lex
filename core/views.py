@@ -153,7 +153,7 @@ def ingresar_pago(request):
             formulario.save(id)
             datos['mensaje']="Agregado correctamente"
     if request.user.is_authenticated==True:
-        return render(request,'core/pagos.html', datos)
+        return render(request,'core/ingresar_pago.html', datos)
     else:
         return redirect('login')
 
@@ -167,19 +167,18 @@ def ingresar_causas(request):
         formulario=AgregarCausas(request.POST,request.FILES)
         id=User.objects.get(username=request.user.username)
         if formulario.is_valid():
-            formulario.save()
+            formulario.save(id)
             datos['mensaje']="Guardado Exitosamente"
     return render(request, 'core/ingresar_causa.html', datos)
 
 def registrar_presupuesto(request):
+    datos={
+            'form':PresupuestoForm()
+        }
     if request.method=="POST":
         form=PresupuestoForm(request.POST, request.FILES)
         id=User.objects.get(username=request.user.username)
         if form.is_valid():
-            form.save(id)
-    else:
-        datos={
-            'form':PresupuestoForm()
-        }
+            form.save(id)   
     return render(request, 'core/registrar_presupuesto.html',datos)
 

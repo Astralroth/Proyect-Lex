@@ -1,12 +1,51 @@
 {% extends 'core/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'css/solicitar_servicio.css' %}">
+{% endblock css %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+{% endblock js %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    </br>
-    {{form_user.as_p}}
-    {{form_phone.as_p}}
-    <button type="submit">Actualizar datos</button>
-    <button onclick="location=`{% url 'index' %}`">Cancelar</button>
-</form>
+	<div class="d-flex justify-content-center">
+		<div class="card mt-5 col-md-4 animated bounceInDown myForm">
+			<div class="card-header">
+				<center><h4>Agregar Causa</h4></center>
+			</div>
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+					<div id="dynamic_container">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-user"></i></span>
+							</div>
+							{{form_user.username}}
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-id-card"></i></span>
+							</div>
+							{{form_user.email}}
+						</div>
+						<div class="input-group mt-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text br-15"><i class="fas fa-calendar-alt"></i></span>
+							</div>
+							{{form_phone.phone}}
+						</div>
+			</div>
+			<div class="card-footer">
+				<button type="submit" class="btn btn-success btn-sm submit_btn"><i class="fas fa-arrow-alt-circle-right"></i> Submit</button>
+				{{mensaje}}
+			</div>
+            </form>
+		</div>
+	</div>
 {% endblock content %}

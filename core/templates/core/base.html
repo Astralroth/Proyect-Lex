@@ -72,6 +72,32 @@
                     </div>            
                 </li>
                 {% endif %}
+                {% if perms.core.view_presupuesto %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Presupuesto
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if perms.core.add_presupuesto %}
+                        <a class="dropdown-item" href="{% url 'budget' %}">Agregar</a>
+                        {% endif %}
+                    </div>            
+                </li>
+                {% endif %}
+                {% if perms.core.view_pagos %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        pagos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if perms.core.add_presupuesto %}
+                        <a class="dropdown-item" href="{% url 'pago' %}">Agregar</a>
+                        {% endif %}
+                    </div>            
+                </li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav">
                 <a class="navbar-brand" href="{% url 'profile_edit' %}"><img src="{% static 'img/profile_icon.png' %}" width="30" height="30" alt=""></a>

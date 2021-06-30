@@ -109,7 +109,7 @@ class AgregarCausas(forms.ModelForm):
     age=forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}), label="Edad")
     email=forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'class':'form-control'}),label="Correo electronico")
     phone=forms.CharField(max_length=12, widget=forms.NumberInput(attrs={'class':'form-control'}), label="Telefono celular")
-    rut=forms. CharField(max_length=10, widget=forms.NumberInput(attrs={'class':'form-control'}), label="Rut")
+    rut=forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class':'form-control'}), label="Rut")
     files_boleta=forms.FileField(widget=forms.FileInput, label="Boleta")
     files_causa=forms.FileField(widget=forms.FileInput, label="Causa")
     files_contrato=forms.FileField(widget=forms.FileInput, label="Contrato")
@@ -117,18 +117,25 @@ class AgregarCausas(forms.ModelForm):
     class Meta:
         model = Causas
         fields = ("name", "age", "email", "phone", "rut","files_boleta","files_causa", "files_contrato",)
+    
+    def save(self,id,commit=True):
+        user= super(AgregarCausas, self).save(commit=False)
+        if commit:
+            user.set_id(id)
+            user.save()
+        return user
 
 class PresupuestoForm(forms.ModelForm):
     
-    first_name=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),label="Nombre del cliente")
+    name=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),label="Nombre del cliente")
     servicio=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), label="Tipo Servicio")
     presupuesto=forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}),label="Presupuesto")
     email=forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}), label="Correo Electrónico")
-    
+    rut=forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class':'form-control'}), label="Rut")
     
     class Meta:
         model = Presupuesto
-        fields = ("first_name", "servicio", "presupuesto", "email",)
+        fields = ("name", "servicio", "presupuesto", "email","rut",)
         
     
     def save(self,id,commit=True):

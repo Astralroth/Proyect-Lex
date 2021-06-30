@@ -21,5 +21,6 @@ urlpatterns = [
     path('contract/view/', views.consultar_contratos, name='contract_view'),
     path('contract/view/staff', views.consultar_contratos_staff, name='contract_view_staff'),
     path('pay/', views.ingresar_pago, name='pago'),
-    path('causes/', views.ingresar_causas, name='ingresar_causas')
+    path('causes/', views.ingresar_causas, name='ingresar_causas'),
+    path('budget/', views.registrar_presupuesto, name='budget')
 ]
