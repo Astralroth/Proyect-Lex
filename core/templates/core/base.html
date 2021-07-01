@@ -52,10 +52,7 @@
                         <a class="dropdown-item" href="{% url 'contract' %}">Solicitar</a>
                         {% endif %}
                         <a class="dropdown-item" href="{% url 'contract_view' %}">Consultar</a>
-                        {% if user.is_staff %}
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'contract_view_staff' %}">Consultar todos</a>
-                        {% endif %}
+                        
                     </div>                   
                 </li>
                 {% endif %}
@@ -94,7 +91,9 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if perms.core.add_presupuesto %}
                         <a class="dropdown-item" href="{% url 'pago' %}">Agregar</a>
+                       
                         {% endif %}
+
                     </div>            
                 </li>
                 {% endif %}
