@@ -8,6 +8,9 @@ class Telefono(models.Model):
     user=models.ForeignKey('auth.User', on_delete=models.CASCADE)
     phone=models.CharField('Telefono',max_length=12, blank=True, null=True)
     
+    def __str__(self):
+        return str(self.user)
+    
     def set_id(self,id):
         self.user=id
     
@@ -20,10 +23,13 @@ class Servicio(models.Model):
     cause=models.TextField('Redactar Causa',max_length=254, null=True)
     files=models.FileField(null=True)
     
+    def __str__(self):
+        return str(self.cliente)
+    
     def set_id(self, id):
         self.cliente=id
 
-class Pagos(models.Model):
+class Pago(models.Model):
     tecnico=models.ForeignKey('auth.User', on_delete=models.CASCADE)
     name=models.CharField(max_length=20)
     rut=models.CharField(max_length=10)
@@ -32,10 +38,14 @@ class Pagos(models.Model):
     mount=models.IntegerField()
     email=models.EmailField(max_length=254)
     state=models.CharField(max_length=30, default='pendiente')
+    
+    def __str__(self):
+        return str(self.tecnico)
+    
     def set_id(self, id):
         self.tecnico=id
 
-class Causas(models.Model):
+class Causa(models.Model):
     tecnico=ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
     name=models.CharField(max_length=30)
     age=models.IntegerField('Edad',null=True)
@@ -45,6 +55,9 @@ class Causas(models.Model):
     files_boleta=models.FileField(blank=True, null=True)
     files_causa=models.FileField(blank=True, null=True)
     files_contrato=models.FileField(blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.tecnico)
     
     def set_id(self, id):
         self.tecnico=id
@@ -62,6 +75,9 @@ class Contrato(models.Model):
     type_service=models.CharField(max_length=30,blank=True, null=True)
     additional_service=models.CharField(max_length=30,blank=True, null=True)
     
+    def __str__(self):
+        return str(self.abogado)
+    
     def set_id(self, id):
         self.abogado=id
 
@@ -72,6 +88,9 @@ class Presupuesto(models.Model):
     presupuesto=models.IntegerField()
     email=models.EmailField(max_length=254)
     rut=models.CharField(max_length=10,null=True)
+    
+    def __str__(self):
+        return str(self.tecnico)
     
     def set_id(self, id):
         self.tecnico=id

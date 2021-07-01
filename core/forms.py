@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from core.models import Causas, Contrato, Pagos, Presupuesto, Servicio, Telefono
+from core.models import Causa, Contrato, Pago, Presupuesto, Servicio, Telefono
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
@@ -93,7 +93,7 @@ class PagosForm(forms.ModelForm):
     email=forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Email '}))
 
     class Meta:
-        model = Pagos
+        model = Pago
         fields = ("name","rut","date","type","mount","email",)
         
     def save(self,id,commit=True):
@@ -115,7 +115,7 @@ class AgregarCausas(forms.ModelForm):
     files_contrato=forms.FileField(widget=forms.FileInput, label="Contrato",required=False)
     
     class Meta:
-        model = Causas
+        model = Causa
         fields = ("name", "age", "email", "phone", "rut","files_boleta","files_causa", "files_contrato",)
     
     def save(self,id,commit=True):
