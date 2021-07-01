@@ -51,7 +51,6 @@ def pos_signin(request, user):
 def main_page(request):
     return render(request,'core/index.html')
 
-@login_required
 @permission_required('core.add_servicio')
 def solicitar_servicio(request):
     datos={
@@ -71,7 +70,6 @@ def solicitar_servicio(request):
 def redirect_login(request):
     return redirect('login')
 
-@login_required
 @permission_required('auth.change_user')
 def profile_edit(request):
     usuario=get_object_or_404(User, username=request.user.username)
@@ -90,7 +88,6 @@ def profile_edit(request):
     }    
     return render(request, 'core/modificar_perfil.html',datos)
 
-@login_required
 @permission_required('core.change_servicio')
 def editar_solicitud(request,pk):
     servicio=get_object_or_404(Servicio, id=pk)
@@ -106,7 +103,6 @@ def editar_solicitud(request,pk):
         }
     return render(request, 'core/solicitar_servicio.html', datos)
 
-@login_required
 @permission_required('core.view_servicio')
 def consultar_solicitudes(request):
     user=User.objects.get(username=request.user.username)
@@ -140,11 +136,12 @@ def consultar_contratos(request):
     form=Contrato.objects.filter(abogado_id=user.id).all()
     return render(request, 'core/consultar_contratos.html', {'list':form})
 
+@login_required
 def consultar_contratos_staff(request):
     contrato=Contrato.objects.select_related('abogado').all()
     return render(request, 'core/consultar_contratos.html',{'list':contrato})
 
-@permission_required('add_pago')
+@permission_required('core.add_pago')
 def ingresar_pago(request):
     datos={
         'form':PagosForm()
@@ -160,7 +157,6 @@ def ingresar_pago(request):
     
     return render(request,'core/ingresar_pago.html', datos)
 
-@login_required
 @permission_required('core.add_causa')
 def ingresar_causas(request):
     datos={
@@ -176,6 +172,7 @@ def ingresar_causas(request):
             datos['mensaje']=formulario.errors
     return render(request, 'core/ingresar_causa.html', datos)
 
+@permission_required('core.add_presupuesto')
 def registrar_presupuesto(request):
     datos={
             'form':PresupuestoForm()
@@ -187,7 +184,7 @@ def registrar_presupuesto(request):
             form.save(id)   
     return render(request, 'core/registrar_presupuesto.html',datos)
 
+@login_required
 def consultar_pagos_staff(request):
     pagos=Pago.objects.select_related('tecnico').all()
     return render(request, 'core/consultar_pago.html',{'list':pagos})
-

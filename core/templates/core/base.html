@@ -51,7 +51,12 @@
                         {% if perms.core.add_contrato %}
                         <a class="dropdown-item" href="{% url 'contract' %}">Solicitar</a>
                         {% endif %}
+                        {% if perms.core.view_contrato %}
                         <a class="dropdown-item" href="{% url 'contract_view' %}">Consultar</a>
+                        {% endif %}
+                        {% if perms.core.change_contrato %}
+                        <a class="dropdown-item" href="{% url 'contract_view_staff' %}">Consultar todos</a>
+                        {% endif %}
                         
                     </div>                   
                 </li>
@@ -82,17 +87,17 @@
                     </div>            
                 </li>
                 {% endif %}
-                {% if perms.core.view_pagos %}
+                {% if perms.core.view_pago %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Pagos
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% if perms.core.add_presupuesto %}
+                        {% if perms.core.add_pago %}
                         <a class="dropdown-item" href="{% url 'pago' %}">Agregar</a>
-                       
                         {% endif %}
+                        <a class="dropdown-item" href="{% url 'pago_view_staff' %}">Consultar todos</a>
 
                     </div>            
                 </li>
