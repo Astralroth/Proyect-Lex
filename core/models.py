@@ -29,7 +29,7 @@ class Pagos(models.Model):
     rut=models.CharField(max_length=10)
     date=models.DateField()
     type=models.CharField(max_length=30)
-    mount=models.FloatField()
+    mount=models.IntegerField()
     email=models.EmailField(max_length=254)
 
     def set_id(self, id):
@@ -56,8 +56,8 @@ class Contrato(models.Model):
     age=models.IntegerField(null=True)
     email=models.EmailField(max_length=254)
     phone=models.CharField(max_length=12)
-    files_boleta=models.FileField(null=True)
-    files_causa=models.FileField(null=True)
+    files_boleta=models.FileField(blank=True,null=True)
+    files_causa=models.FileField(blank=True,null=True)
     datetime=models.DateField(blank=True, null=True)
     type_service=models.CharField(max_length=30,blank=True, null=True)
     additional_service=models.CharField(max_length=30,blank=True, null=True)

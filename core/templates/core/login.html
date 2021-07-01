@@ -49,7 +49,7 @@
 		
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
-						<p>Don't have an account?</p> <a href="#" class="ml-2">Sign Up</a>
+						<p>Don't have an account?</p> <a href="{% url 'signin' %}" class="ml-2">Sign Up</a>
 					</div>
                     {% if form.errors %}
                         <p>Por favor, introduzca un nombre de usuario y clave correctos.</p>

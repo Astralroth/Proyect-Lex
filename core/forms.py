@@ -66,12 +66,12 @@ class ContratoForm(forms.ModelForm):
     age=forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control','placeholder':'Edad'}))
     email=forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Correo electronico'}))
     phone=forms.CharField(widget=forms.NumberInput(attrs={'class':'form-control','placeholder':'Telefono celular'}))
-    files_boleta=forms.FileField(widget=forms.FileInput, required=False)
-    files_causa=forms.FileField(widget=forms.FileInput, required=False)
+    files_boleta=forms.FileField(required=False)
+    files_causa=forms.FileField(required=False)
     datetime=forms.DateField(widget=forms.DateInput(attrs={'class':'form-control','type':'date'}))
     type_service=forms.ChoiceField(choices=(('',''),('Familia','Familia'),('Civiles','Civiles'),('Inmobiliarias','Inmobiliarias'),('Salud','Salud'),('Transito','Transito'),),widget=forms.Select(attrs={'class':'form-control'}))
     additional_service=forms.ChoiceField(choices=(('',''),('Otros','Otros'),),widget=forms.Select(attrs={'class':'form-control'}))
-    format=forms.ChoiceField(choices=(('word','word'),('pdf','pdf')),widget=forms.RadioSelect())
+    format=forms.ChoiceField(choices=(('word','word'),('pdf','pdf')),widget=forms.RadioSelect(),required=False)
     class Meta:
         model = Contrato
         fields = ("name","rut","age","email","phone","files_boleta","files_causa","datetime",)
@@ -87,7 +87,7 @@ class PagosForm(forms.ModelForm):
 
     name=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),label="Nombre del cliente")
     rut=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}), label="Rut")
-    date=forms.DateField(widget=forms.DateInput(attrs={'class':'form-control'}), label="Fecha")
+    date=forms.DateField(widget=forms.DateInput(attrs={'class':'form-control','type':'date'}), label="Fecha")
     type=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}),label="Tipo de pago")
     mount=forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}), label="Monto")
     email=forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}),label="Correo electronico")
@@ -95,7 +95,7 @@ class PagosForm(forms.ModelForm):
     class Meta:
         model = Pagos
         fields = ("name","rut","date","type","mount","email",)
-
+        
     def save(self,id,commit=True):
         user= super(PagosForm, self).save(commit=False)
         if commit:
@@ -110,9 +110,9 @@ class AgregarCausas(forms.ModelForm):
     email=forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'class':'form-control'}),label="Correo electronico")
     phone=forms.CharField(max_length=12, widget=forms.NumberInput(attrs={'class':'form-control'}), label="Telefono celular")
     rut=forms.CharField(max_length=10, widget=forms.TextInput(attrs={'class':'form-control'}), label="Rut")
-    files_boleta=forms.FileField(widget=forms.FileInput, label="Boleta")
-    files_causa=forms.FileField(widget=forms.FileInput, label="Causa")
-    files_contrato=forms.FileField(widget=forms.FileInput, label="Contrato")
+    files_boleta=forms.FileField(widget=forms.FileInput, label="Boleta",required=False)
+    files_causa=forms.FileField(widget=forms.FileInput, label="Causa", required=False)
+    files_contrato=forms.FileField(widget=forms.FileInput, label="Contrato",required=False)
     
     class Meta:
         model = Causas

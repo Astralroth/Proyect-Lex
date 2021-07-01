@@ -121,13 +121,16 @@ def consultar_solicitudes_staff(request):
 @permission_required('core.add_contrato')
 def registrar_contrato(request):
     datos={
-            'form':ContratoForm()
-        }
+        'form':ContratoForm()
+    }
     if request.method=="POST":
         form=ContratoForm(request.POST, request.FILES)
         id=User.objects.get(username=request.user.username)
         if form.is_valid():
             form.save(id)
+            datos['mensaje']="Agregado correctamente"
+        if form.is_valid()==False:
+            datos['mensaje']=form.errors
         
     return render(request, 'core/registrar_contrato.html',datos)
 
@@ -152,10 +155,10 @@ def ingresar_pago(request):
         if formulario.is_valid():
             formulario.save(id)
             datos['mensaje']="Agregado correctamente"
-    if request.user.is_authenticated==True:
-        return render(request,'core/ingresar_pago.html', datos)
-    else:
-        return redirect('login')
+        if formulario.is_valid()==False:
+            datos['mensaje']=formulario.errors
+    
+    return render(request,'core/ingresar_pago.html', datos)
 
 @login_required
 @permission_required('core.add_causa')
@@ -164,11 +167,13 @@ def ingresar_causas(request):
         'form':AgregarCausas()
     }
     if request.method=='POST':
-        formulario=AgregarCausas(request.POST,request.FILES)
+        formulario=AgregarCausas(request.POST)
         id=User.objects.get(username=request.user.username)
         if formulario.is_valid():
             formulario.save(id)
             datos['mensaje']="Guardado Exitosamente"
+        if formulario.is_valid()==False:
+            datos['mensaje']=formulario.errors
     return render(request, 'core/ingresar_causa.html', datos)
 
 def registrar_presupuesto(request):
