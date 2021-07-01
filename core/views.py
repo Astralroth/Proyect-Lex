@@ -1,4 +1,4 @@
-from .models import Contrato, Servicio, Telefono
+from .models import Pagos, Contrato, Servicio, Telefono
 from django.contrib.auth.models import Group, User
 from core.forms import AgregarCausas, ContratoForm, EditUser, PagosForm, PresupuestoForm, SignUpForm, SolicitarServicioForm, TelefonoForm
 from django.shortcuts import get_object_or_404, redirect, render
@@ -186,4 +186,8 @@ def registrar_presupuesto(request):
         if form.is_valid():
             form.save(id)   
     return render(request, 'core/registrar_presupuesto.html',datos)
+
+def consultar_pagos_staff(request):
+    pagos=Pagos.objects.select_related('tecnico').all()
+    return render(request, 'core/consultar_pago.html',{'list':pagos})
 

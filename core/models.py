@@ -31,7 +31,7 @@ class Pagos(models.Model):
     type=models.CharField(max_length=30)
     mount=models.IntegerField()
     email=models.EmailField(max_length=254)
-
+    state=models.CharField(max_length=30, default='pendiente')
     def set_id(self, id):
         self.tecnico=id
 

@@ -1,0 +1,68 @@
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/consultar_pago.css' %}">
+{% endblock css %}
+
+{% block js %}
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="{% static 'js/pago.js' %}">
+{% endblock js %}
+
+{% block content %}
+<div class="container">
+	<div class="row d-flex justify-content-center">
+
+		<section class="content ">
+			
+			<div class="col-md-12 col-md-offset-6 ">
+                <h1>Pagos Registrados</h1>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="pull-right">
+							<div class="btn-group">
+								<button type="button" class="btn btn-success btn-filter" data-target="pagado">Pagado</button>
+								<button type="button" class="btn btn-warning btn-filter" data-target="pendiente">Pendiente</button>
+								<button type="button" class="btn btn-danger btn-filter" data-target="cancelado">Cancelado</button>
+								<button type="button" class="btn btn-default btn-filter" data-target="all">Todos</button>
+							</div>
+						</div>
+						<div class="table-container">
+							<table class="table table-filter">
+								<tbody>
+									{% for p in list %}
+									<tr data-status="{{p.state}}">
+										<td>
+											<div class="media">
+												<div class="media-body">
+													<span class="media-meta pull-right">{{p.type}}</span>
+													<h4 class="title">
+														{{p.name}}
+														<span class="pull-right {{p.state}}">({{p.state | capfirst}})</span>
+													</h4>
+													<p class="summary">{{p.mount}}</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="content-footer">
+					<p>
+						Page © - 2016 <br>
+						Powered By <a href="https://www.facebook.com/tavo.qiqe.lucero" target="_blank">TavoQiqe</a>
+					</p>
+				</div>
+			</div>
+		</section>
+		
+	</div>
+</div>
+
+{% endblock content %}
